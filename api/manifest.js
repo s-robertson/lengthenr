@@ -8,7 +8,6 @@ const criteria = {
     env: process.env.NODE_ENV
 };
 
-
 const manifest = {
     $meta: 'This file defines the plot device.',
     server: {
@@ -27,10 +26,18 @@ const manifest = {
     }],
     registrations: [
         {
+            plugin: {
+                register: 'hapi-plugin-mysql',
+                options: Config.get('/db'),
+            }
+        },
+        {
             plugin: './server/api/index'
         }
     ]
 };
+
+console.log(Config.get('/db'));
 
 
 const store = new Confidence.Store(manifest);

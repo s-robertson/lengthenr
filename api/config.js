@@ -2,6 +2,7 @@
 
 const Confidence = require('confidence');
 
+const dbSettings = require('./db');
 
 const criteria = {
     env: process.env.NODE_ENV
@@ -17,6 +18,11 @@ const config = {
             test: 9090,
             $default: 8080
         }
+    },
+    db: {
+        $filter: 'env',
+        production: dbSettings.dev,
+        $default: dbSettings.dev
     }
 };
 
