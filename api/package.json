@@ -23,6 +23,7 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
+    "chance": "^1.0.1",
     "confidence": "1.x.x",
     "glue": "3.x.x",
     "hapi": "12.x.x",

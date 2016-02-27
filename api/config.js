@@ -1,8 +1,7 @@
 'use strict';
 
 const Confidence = require('confidence');
-
-const dbSettings = require('./db');
+const Db = require('./db');
 
 const criteria = {
     env: process.env.NODE_ENV
@@ -21,8 +20,8 @@ const config = {
     },
     db: {
         $filter: 'env',
-        production: dbSettings.dev,
-        $default: dbSettings.dev
+        production: Db.dev,
+        $default: Db.dev
     }
 };
 

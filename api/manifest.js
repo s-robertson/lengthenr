@@ -28,7 +28,7 @@ const manifest = {
         {
             plugin: {
                 register: 'hapi-plugin-mysql',
-                options: Config.get('/db'),
+                options: Config.get('/db')
             }
         },
         {
