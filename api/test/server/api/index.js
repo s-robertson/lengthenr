@@ -5,16 +5,23 @@ const Code = require('code');
 const Config = require('../../../config');
 const Hapi = require('hapi');
 const IndexPlugin = require('../../../server/api/index');
-
+const Chance = require('chance');
+const chance = new Chance();
 
 const lab = exports.lab = Lab.script();
 let request;
 let server;
 
-
 lab.beforeEach((done) => {
 
-    const plugins = [IndexPlugin];
+    const plugins = [
+        IndexPlugin,
+        {
+            register: require('hapi-sequelize'),
+            options: Config.get('/db')
+        }
+    ];
+
     server = new Hapi.Server();
     server.connection({ port: Config.get('/port/api') });
     server.register(plugins, (err) => {
@@ -23,7 +30,19 @@ lab.beforeEach((done) => {
             return done(err);
         }
 
-        done();
+        server.plugins['hapi-sequelize'].db.sequelize.sync({ force: Config.get('/db/force') })
+            .then(() => {
+
+                done();
+            })
+            .catch((err) => {
+
+                return done(err);
+            })
+            .error((err) => {
+
+                return done(err);
+            });
     });
 });
 
@@ -51,4 +70,64 @@ lab.experiment('Index Plugin', () => {
             done();
         });
     });
+});
+
+lab.experiment('URL Creation', () => {
+
+    const pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/';
+    const url = 'http://' + chance.string({ length: 10, pool: pool });
+    const longUrl = 'http://' + chance.string({ length: 60, pool: pool });
+
+    let urlID;
+
+    lab.beforeEach((done) => {
+
+        request = {
+            method: 'POST',
+            url: '/url',
+            payload: {
+                url: url
+            }
+        };
+
+        done();
+    });
+
+    lab.test('it creates a lengthened url', (done) => {
+
+        server.inject(request, (response) => {
+
+            Code.expect(response.result.original).to.be.a.string().and.to.equal(url);
+            Code.expect(response.result.id).to.be.a.number();
+            Code.expect(response.result.lengthened).to.be.a.string().and.to.have.length(50);
+
+            urlID = response.result.id;
+
+            done();
+        });
+    });
+
+    lab.test('it retrieves the newly-added url', (done) => {
+
+        server.inject(request, (response) => {
+
+            Code.expect(response.result.id).to.equal(urlID);
+
+            done();
+        });
+    });
+
+
+    lab.test('it creates a lengthened url longer than 50 characters', (done) => {
+
+        request.payload.url = longUrl;
+
+        server.inject(request, (response) => {
+
+            Code.expect(response.result.lengthened).to.be.a.string().and.to.have.length(parseInt(longUrl.length * 1.5));
+
+            done();
+        });
+    });
+
 });

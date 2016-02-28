@@ -25,8 +25,8 @@ exports.register = function (server, options, next) {
             const models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
 
             // Figure out what's longer, 50% of the URL's length, or our minimum length of 50 characters.
-            const potentialLength = request.payload.url.length * 0.5;
-            const newLength = potentialLength > 50 ? potentialLength : 50;
+            const potentialLength = request.payload.url.length * 1.5;
+            const newLength = parseInt(potentialLength > 50 ? potentialLength : 50);
 
             const lengthedUrl = chance.string({
                 length: newLength,
@@ -41,10 +41,6 @@ exports.register = function (server, options, next) {
                 .spread((url, created) => {
 
                     return reply(url);
-                })
-                .error((err) => {
-
-                    return reply(err);
                 })
                 .catch((err) => {
 
