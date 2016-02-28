@@ -4,8 +4,9 @@ const Lab = require('lab');
 const Code = require('code');
 const Config = require('../../../config');
 const Hapi = require('hapi');
-const IndexPlugin = require('../../../server/api/index');
+const IndexPlugin = require('../../../server/web/index');
 const Randomstring = require('randomstring');
+const Vision = require('vision');
 
 const lab = exports.lab = Lab.script();
 let request;
@@ -14,11 +15,12 @@ let server;
 lab.beforeEach((done) => {
 
     const plugins = [
-        IndexPlugin,
         {
             register: require('hapi-sequelize'),
             options: Config.get('/db')
-        }
+        },
+        Vision,
+        IndexPlugin
     ];
 
     server = new Hapi.Server();
@@ -28,6 +30,11 @@ lab.beforeEach((done) => {
         if (err) {
             return done(err);
         }
+
+        server.views({
+            engines: { jade: require('jade') },
+            path: './server/web/templates'
+        });
 
         server.plugins['hapi-sequelize'].db.sequelize.sync({ force: Config.get('/db/force') })
             .then(() => {
@@ -59,11 +66,11 @@ lab.experiment('Index Plugin', () => {
     });
 
 
-    lab.test('it returns the default message', (done) => {
+    lab.test('it renders the homepage', (done) => {
 
         server.inject(request, (response) => {
 
-            Code.expect(response.result.message).to.match(/welcome to the plot device/i);
+            Code.expect(response.result).to.match(/activate the plot device/i);
             Code.expect(response.statusCode).to.equal(200);
 
             done();
@@ -82,7 +89,7 @@ lab.experiment('URL Creation', () => {
 
         request = {
             method: 'POST',
-            url: '/url',
+            url: '/generate',
             payload: {
                 url: url
             }

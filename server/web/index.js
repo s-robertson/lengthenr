@@ -17,7 +17,7 @@ exports.register = function (server, options, next) {
 
     server.route({
         method: 'POST',
-        path: '/url',
+        path: '/generate',
         handler: function (request, reply) {
 
             const models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
