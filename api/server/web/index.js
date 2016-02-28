@@ -10,7 +10,7 @@ exports.register = function (server, options, next) {
         path: '/',
         handler: function (request, reply) {
 
-            reply({ message: 'Welcome to the plot device.' });
+            return reply.view('index');
         }
     });
 
@@ -18,7 +18,6 @@ exports.register = function (server, options, next) {
     server.route({
         method: 'POST',
         path: '/url',
-        // @TODO: test coverage and split this up into a plugin.
         handler: function (request, reply) {
 
             const models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
@@ -58,5 +57,6 @@ exports.register = function (server, options, next) {
 
 
 exports.register.attributes = {
-    name: 'api'
+    name: 'web',
+    dependencies: 'visionary'
 };

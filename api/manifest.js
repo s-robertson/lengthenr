@@ -21,10 +21,22 @@ const manifest = {
         }
     },
     connections: [{
-        port: Config.get('/port/api'),
-        labels: ['api']
+        port: Config.get('/port/web'),
+        labels: ['web']
     }],
     registrations: [
+        {
+            plugin: 'vision'
+        },
+        {
+            plugin: {
+                register: 'visionary',
+                options: {
+                    engines: { jade: 'jade' },
+                    path: './server/web/templates'
+                }
+            }
+        },
         {
             plugin: {
                 register: 'hapi-sequelize',
@@ -32,7 +44,7 @@ const manifest = {
             }
         },
         {
-            plugin: './server/api/index'
+            plugin: './server/web/index'
         }
     ]
 };
