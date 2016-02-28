@@ -1,3 +1,6 @@
+test/artifacts/*
+/db.js
+
 # Logs
 logs
 *.log
