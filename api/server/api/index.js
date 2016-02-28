@@ -21,6 +21,7 @@ exports.register = function (server, options, next) {
         path: '/url',
         // @TODO: test coverage and split this up into a plugin.
         handler: function (request, reply) {
+
             const models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
 
             // Figure out what's longer, 50% of the URL's length, or our minimum length of 50 characters.
@@ -38,12 +39,15 @@ exports.register = function (server, options, next) {
                 defaults: { lengthened: lengthedUrl }
             })
                 .spread((url, created) => {
+
                     return reply(url);
                 })
                 .error((err) => {
+
                     return reply(err);
                 })
                 .catch((err) => {
+
                     return reply(err);
                 });
         },
