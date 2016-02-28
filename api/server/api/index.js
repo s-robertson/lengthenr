@@ -1,8 +1,7 @@
 'use strict';
 
 const Joi = require('joi');
-const Chance = require('chance');
-const chance = new Chance();
+const Randomstring = require('randomstring');
 
 exports.register = function (server, options, next) {
 
@@ -28,10 +27,7 @@ exports.register = function (server, options, next) {
             const potentialLength = request.payload.url.length * 1.5;
             const newLength = parseInt(potentialLength > 50 ? potentialLength : 50);
 
-            const lengthedUrl = chance.string({
-                length: newLength,
-                pool: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-            });
+            const lengthedUrl = Randomstring.generate(newLength);
 
             // First check and see if the URL already exists in the database.
             models.Url.findOrCreate({

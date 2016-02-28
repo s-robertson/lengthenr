@@ -5,8 +5,7 @@ const Code = require('code');
 const Config = require('../../../config');
 const Hapi = require('hapi');
 const IndexPlugin = require('../../../server/api/index');
-const Chance = require('chance');
-const chance = new Chance();
+const Randomstring = require('randomstring');
 
 const lab = exports.lab = Lab.script();
 let request;
@@ -74,9 +73,8 @@ lab.experiment('Index Plugin', () => {
 
 lab.experiment('URL Creation', () => {
 
-    const pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/';
-    const url = 'http://' + chance.string({ length: 10, pool: pool });
-    const longUrl = 'http://' + chance.string({ length: 60, pool: pool });
+    const url = 'http://' + Randomstring.generate(10);
+    const longUrl = 'http://' + Randomstring.generate(60);
 
     let urlID;
 

@@ -23,13 +23,13 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "chance": "^1.0.1",
     "confidence": "1.x.x",
     "glue": "3.x.x",
     "hapi": "12.x.x",
     "hapi-plugin-mysql": "^3.1.2",
     "hapi-sequelize": "^2.2.4",
     "hoek": "3.x.x",
+    "randomstring": "^1.1.4",
     "sequelize": "^3.19.3"
   },
   "devDependencies": {
