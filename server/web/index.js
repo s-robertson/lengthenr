@@ -2,6 +2,7 @@
 
 const Joi = require('joi');
 const Randomstring = require('randomstring');
+const Boom = require('boom');
 
 exports.register = function (server, options, next) {
 
@@ -14,6 +15,29 @@ exports.register = function (server, options, next) {
         }
     });
 
+    server.route({
+        method: 'GET',
+        path: '/r/{longUrl}',
+        handler: function (request, reply) {
+
+            const models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
+
+            models.Url.findOne({ where: {lengthened: request.params.longUrl}})
+                .then((url) => {
+
+                    if (!url) {
+                        return reply(Boom.badRequest('Invalid URL.'));
+                    }
+
+                    return reply.redirect(url.original).permanent();
+                })
+                .catch((err) => {
+
+                    return reply(err);
+                });
+
+        },
+    });
 
     server.route({
         method: 'POST',
