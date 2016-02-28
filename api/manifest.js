@@ -27,7 +27,7 @@ const manifest = {
     registrations: [
         {
             plugin: {
-                register: 'hapi-plugin-mysql',
+                register: 'hapi-sequelize',
                 options: Config.get('/db')
             }
         },
@@ -36,8 +36,6 @@ const manifest = {
         }
     ]
 };
-
-console.log(Config.get('/db'));
 
 
 const store = new Confidence.Store(manifest);

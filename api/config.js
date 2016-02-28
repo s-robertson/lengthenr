@@ -20,7 +20,8 @@ const config = {
     },
     db: {
         $filter: 'env',
-        production: Db.dev,
+        production: Db.production,
+        test: Db.test,
         $default: Db.dev
     }
 };

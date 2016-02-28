@@ -4,7 +4,7 @@
   "description": "Lengthenr API",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon server.js",
+    "dev": "NODE_ENV=development BLUEBIRD_WARNINGS=0 nodemon server.js",
     "start": "NODE_ENV=production nodemon server.js",
     "test": "lab -c -L",
     "test-cover": "lab -c -r html -o ./test/artifacts/coverage.html && open ./test/artifacts/coverage.html"
@@ -28,7 +28,9 @@
     "glue": "3.x.x",
     "hapi": "12.x.x",
     "hapi-plugin-mysql": "^3.1.2",
-    "hoek": "3.x.x"
+    "hapi-sequelize": "^2.2.4",
+    "hoek": "3.x.x",
+    "sequelize": "^3.19.3"
   },
   "devDependencies": {
     "code": "2.x.x",

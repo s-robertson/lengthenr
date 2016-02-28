@@ -1,7 +1,7 @@
 'use strict';
 
 const Composer = require('./index');
-
+const Config = require('./config');
 
 Composer((err, server) => {
 
@@ -9,8 +9,15 @@ Composer((err, server) => {
         throw err;
     }
 
-    server.start(() => {
+    const db = server.plugins['hapi-sequelize'].db;
 
-        console.log('Started the plot device on port ' + server.info.port);
+    db.sequelize.sync({ force: Config.get('/db/force') }).then(() => {
+
+        console.log('Database models synced.');
+
+        server.start(() => {
+
+            console.log('Started the plot device on port ' + server.info.port);
+        });
     });
 });
