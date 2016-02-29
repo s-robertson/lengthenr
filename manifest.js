@@ -9,7 +9,6 @@ const criteria = {
 };
 
 const manifest = {
-    $meta: 'This file defines the plot device.',
     server: {
         debug: {
             request: ['error']
@@ -26,22 +25,13 @@ const manifest = {
     }],
     registrations: [
         {
-            plugin: 'vision'
-        },
-        {
-            plugin: {
-                register: 'visionary',
-                options: {
-                    engines: { jade: 'jade' },
-                    path: './server/web/templates'
-                }
-            }
-        },
-        {
             plugin: {
                 register: 'hapi-sequelize',
                 options: Config.get('/db')
             }
+        },
+        {
+            plugin: 'inert'
         },
         {
             plugin: './server/web/index'

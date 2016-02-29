@@ -6,7 +6,6 @@ const Config = require('../../../config');
 const Hapi = require('hapi');
 const IndexPlugin = require('../../../server/web/index');
 const Randomstring = require('randomstring');
-const Vision = require('vision');
 
 const lab = exports.lab = Lab.script();
 let request;
@@ -19,7 +18,6 @@ lab.beforeEach((done) => {
             register: require('hapi-sequelize'),
             options: Config.get('/db')
         },
-        Vision,
         IndexPlugin
     ];
 
@@ -30,11 +28,6 @@ lab.beforeEach((done) => {
         if (err) {
             return done(err);
         }
-
-        server.views({
-            engines: { jade: require('jade') },
-            path: './server/web/templates'
-        });
 
         server.plugins['hapi-sequelize'].db.sequelize.sync({ force: Config.get('/db/force') })
             .then(() => {

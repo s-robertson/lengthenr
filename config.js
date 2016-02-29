@@ -9,7 +9,6 @@ const criteria = {
 
 
 const config = {
-    $meta: 'This file configures the plot device.',
     projectName: 'lengthenr',
     port: {
         web: {

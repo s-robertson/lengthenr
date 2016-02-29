@@ -9,9 +9,19 @@ exports.register = function (server, options, next) {
     server.route({
         method: 'GET',
         path: '/',
-        handler: function (request, reply) {
+        handler: {
+            file: 'public/index.html'
+        }
+    });
 
-            return reply.view('index');
+    // Static files
+    server.route({
+        method: 'GET',
+        path: '/public/{file*}',
+        handler: {
+            directory: {
+                path: 'public'
+            }
         }
     });
 
@@ -81,6 +91,5 @@ exports.register = function (server, options, next) {
 
 
 exports.register.attributes = {
-    name: 'web',
-    dependencies: 'visionary'
+    name: 'web'
 };
