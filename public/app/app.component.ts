@@ -1,7 +1,14 @@
 import {Component} from 'angular2/core';
 
 @Component({
-    selector: 'my-app',
-    template: '<h1>My First Angular 2 App</h1>'
+    selector: 'app',
+    template: `
+        <h2>Your URL</h2>
+        <input type="text" />
+        <input type="submit" value="Lengthen it!" />
+        `
 })
-export class AppComponent { }
+
+export class AppComponent {
+
+}
