@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core';
 import {NgForm}    from 'angular2/common';
+import {UrlService} from './url.service';
 
 @Component({
     selector: 'url-form',
@@ -7,11 +8,31 @@ import {NgForm}    from 'angular2/common';
 })
 export class UrlFormComponent {
 
-    submitted = false;
+    constructor(private _urlService: UrlService) {}
 
+    lengthenedUrl = null;
     url = '';
 
     onSubmit() {
-        this.submitted = true;
+        this.lengthenUrl(this.url);
+    }
+
+    lengthenUrl(url: string) {
+        url = this.checkUrl(url);
+
+        this._urlService.lengthenUrl(url)
+            .subscribe(
+                url => this.lengthenedUrl = url.lengthened
+            );
+    }
+
+    checkUrl(url: string): string {
+        let checkedUrl = url;
+
+        if (url.search(/http:\/\/|https:\/\//) != 0) {
+            checkedUrl = 'http://' + checkedUrl;
+        }
+
+        return checkedUrl;
     }
 }
