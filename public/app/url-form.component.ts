@@ -10,6 +10,7 @@ export class UrlFormComponent {
 
     constructor(private _urlService: UrlService) {}
 
+    lengthenedHash = null;
     lengthenedUrl = null;
     url = '';
 
@@ -22,7 +23,7 @@ export class UrlFormComponent {
 
         this._urlService.lengthenUrl(url)
             .subscribe(
-                url => this.lengthenedUrl = url.lengthened
+                url => this.updateLengthenedUrl(url.lengthened)
             );
     }
 
@@ -35,4 +36,11 @@ export class UrlFormComponent {
 
         return checkedUrl;
     }
+
+    updateLengthenedUrl(hash: string) {
+        this.lengthenedHash = hash;
+        this.lengthenedUrl = 'http://' + window.location.hostname + '/r/' + hash;
+    }
+
+    build
 }

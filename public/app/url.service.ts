@@ -7,7 +7,7 @@ import {Headers, RequestOptions} from 'angular2/http';
 export class UrlService {
     constructor(private http: Http) {}
 
-    private _generateUrl = 'http://localhost:8080/generate';
+    private _generateUrl = '/generate';
 
     lengthenUrl(url: string) {
         let body = JSON.stringify({ url });
