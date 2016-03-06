@@ -1,2 +1,4 @@
 app/*.js
 app/*.js.map
+dist/*.js
+dist/*.js.map

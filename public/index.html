@@ -2,37 +2,13 @@
 <head>
     <title>Lengthenr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
-    <script src="/public/node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="/public/node_modules/systemjs/dist/system-polyfills.js"></script>
-
-    <script src="/public/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="/public/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/public/node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="/public/node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="/public/node_modules/angular2/bundles/http.dev.js"></script>
-
-    <!-- 2. Configure SystemJS -->
-    <script>
-        System.config({
-            packages: {
-                'public/app': {
-                    format: 'register',
-                    defaultExtension: 'js'
-                }
-            }
-        });
-        System.import('public/app/main')
-                .then(null, console.error.bind(console));
-    </script>
-
 </head>
 
 <!-- 3. Display the application -->
 <body>
-<app>Loading...</app>
+    <app>Loading...</app>
+    <script src="dist/vendor.bundle.js"></script>
+    <script src="dist/app.bundle.js"></script>
 </body>
 
 </html>

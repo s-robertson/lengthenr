@@ -4,7 +4,7 @@ import {UrlService} from './url.service';
 
 @Component({
     selector: 'url-form',
-    templateUrl: 'public/app/url-form.component.html'
+    templateUrl: 'app/url-form.component.html'
 })
 export class UrlFormComponent {
 
