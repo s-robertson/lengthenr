@@ -17,10 +17,20 @@ exports.register = function (server, options, next) {
     // Static files
     server.route({
         method: 'GET',
-        path: '/public/{file*}',
+        path: '/dist/{file*}',
         handler: {
             directory: {
-                path: 'public'
+                path: 'public/dist'
+            }
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/app/{file*}',
+        handler: {
+            directory: {
+                path: 'public/app'
             }
         }
     });
