@@ -4,6 +4,8 @@ import {HTTP_PROVIDERS}    from 'angular2/http';
 import {UrlService} from './url.service';
 import {UrlFormComponent} from './url-form.component';
 
+import './sass/style.scss';
+
 @Component({
     selector: 'app',
     template: '<url-form></url-form>',

@@ -18,6 +18,11 @@ module.exports = {
             {
                 test: /\.ts/,
                 loaders: ['ts-loader']
+            },
+            // SASS
+            {
+                test: /\.scss$/,
+                loader: 'style!css!sass'
             }
         ]
     },
