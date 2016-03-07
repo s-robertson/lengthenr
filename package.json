@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development BLUEBIRD_WARNINGS=0 nodemon server.js",
-    "start": "pm2 start server.js",
+    "start": "NODE_ENV=production pm2 start server.js --name lengthenr",
     "test": "lab -c -L",
     "test-cover": "lab -c -r html -o ./test/artifacts/coverage.html && open ./test/artifacts/coverage.html"
   },
