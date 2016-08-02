@@ -72,14 +72,14 @@ lab.experiment('URL Creation', () => {
 
         server.inject(request, (response) => {
 
-            Code.expect(response.result.original).to.be.a.string().and.to.equal(url);
-            Code.expect(response.result.id).to.be.a.number();
-            Code.expect(response.result.lengthened).to.be.a.string().and.to.have.length(50);
-            Code.expect(response.result.lengthenedHash).to.be.a.string().and.to.have.length(32);
-            Code.expect(response.result.originalHash).to.be.a.string().and.to.have.length(32);
+            Code.expect(response.result.url.original).to.be.a.string().and.to.equal(url);
+            Code.expect(response.result.url.id).to.be.a.number();
+            Code.expect(response.result.url.lengthened).to.be.a.string().and.to.have.length(50);
+            Code.expect(response.result.url.lengthenedHash).to.be.a.string().and.to.have.length(32);
+            Code.expect(response.result.url.originalHash).to.be.a.string().and.to.have.length(32);
 
 
-            urlID = response.result.id;
+            urlID = response.result.url.id;
 
             done();
         });
@@ -89,7 +89,7 @@ lab.experiment('URL Creation', () => {
 
         server.inject(request, (response) => {
 
-            Code.expect(response.result.id).to.equal(urlID);
+            Code.expect(response.result.url.id).to.equal(urlID);
 
             done();
         });
@@ -102,7 +102,7 @@ lab.experiment('URL Creation', () => {
 
         server.inject(request, (response) => {
 
-            Code.expect(response.result.lengthened).to.be.a.string().and.to.have.length(parseInt(longUrl.length * 1.5));
+            Code.expect(response.result.url.lengthened).to.be.a.string().and.to.have.length(parseInt(longUrl.length * 1.5));
 
             done();
         });

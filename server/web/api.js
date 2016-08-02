@@ -34,7 +34,7 @@ exports.register = function (server, options, next) {
             })
                 .spread((url) => {
 
-                    return reply(url);
+                    return reply({ url: url });
                 })
                 .catch((err) => {
 
@@ -45,7 +45,10 @@ exports.register = function (server, options, next) {
             validate: {
                 payload: {
                     url: {
-                        original: Joi.string().uri({ scheme: ['http', 'https'] }).max(500).required()
+                        original: Joi.string().uri({ scheme: ['http', 'https'] }).max(500).required(),
+                        originalHash: Joi.string().optional(),
+                        lengthened: Joi.string().optional(),
+                        lengthenedHash: Joi.string().optional()
                     }
                 }
             }
