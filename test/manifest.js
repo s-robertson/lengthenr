@@ -16,10 +16,4 @@ lab.experiment('Manifest', () => {
         done();
     });
 
-
-    lab.test('it gets manifest meta data', (done) => {
-
-        Code.expect(Manifest.meta('/')).to.match(/this file defines the plot device/i);
-        done();
-    });
 });

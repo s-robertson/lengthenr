@@ -2,22 +2,22 @@
 
 module.exports = function (sequelize, DataTypes) {
 
-    const Url = sequelize.define('Url', {
+    return sequelize.define('Url', {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        original: { type: DataTypes.STRING(500) },
-        lengthened: { type: DataTypes.STRING(1000) }
+        original: { type: DataTypes.TEXT('long') },
+        originalHash: { type: DataTypes.STRING(32) },
+        lengthened: { type: DataTypes.TEXT('long') },
+        lengthenedHash: { type: DataTypes.STRING(32) }
     }, {
         indexes: [
             {
-                fields: ['original'],
+                fields: ['originalHash'],
                 method: 'BTREE'
             },
             {
-                fields: ['lengthened'],
+                fields: ['lengthenedHash'],
                 method: 'BTREE'
             }
         ]
     });
-
-    return Url;
 };

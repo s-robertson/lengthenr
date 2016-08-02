@@ -30,6 +30,7 @@
     "hapi-sequelize": "^2.2.4",
     "hoek": "3.x.x",
     "inert": "^3.2.0",
+    "md5": "^2.1.0",
     "randomstring": "^1.1.4",
     "sequelize": "^3.19.3"
   },

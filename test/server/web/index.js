@@ -46,31 +46,6 @@ lab.beforeEach((done) => {
 });
 
 
-lab.experiment('Index Plugin', () => {
-
-    lab.beforeEach((done) => {
-
-        request = {
-            method: 'GET',
-            url: '/'
-        };
-
-        done();
-    });
-
-
-    lab.test('it renders the homepage', (done) => {
-
-        server.inject(request, (response) => {
-
-            Code.expect(response.result).to.match(/activate the plot device/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-});
-
 lab.experiment('URL Creation', () => {
 
     const url = 'http://' + Randomstring.generate(10);
@@ -82,9 +57,11 @@ lab.experiment('URL Creation', () => {
 
         request = {
             method: 'POST',
-            url: '/generate',
+            url: '/urls',
             payload: {
-                url: url
+                url: {
+                    original: url
+                }
             }
         };
 
@@ -98,6 +75,9 @@ lab.experiment('URL Creation', () => {
             Code.expect(response.result.original).to.be.a.string().and.to.equal(url);
             Code.expect(response.result.id).to.be.a.number();
             Code.expect(response.result.lengthened).to.be.a.string().and.to.have.length(50);
+            Code.expect(response.result.lengthenedHash).to.be.a.string().and.to.have.length(32);
+            Code.expect(response.result.originalHash).to.be.a.string().and.to.have.length(32);
+
 
             urlID = response.result.id;
 
@@ -118,7 +98,7 @@ lab.experiment('URL Creation', () => {
 
     lab.test('it creates a lengthened url longer than 50 characters', (done) => {
 
-        request.payload.url = longUrl;
+        request.payload.url.original = longUrl;
 
         server.inject(request, (response) => {
 

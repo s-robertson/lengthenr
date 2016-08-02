@@ -31,9 +31,6 @@ const manifest = {
             }
         },
         {
-            plugin: 'inert'
-        },
-        {
             plugin: './server/web/index'
         }
     ]
