@@ -31,7 +31,17 @@ const manifest = {
             }
         },
         {
-            plugin: './server/web/index'
+            plugin: {
+                register: './server/web/api'
+            },
+            options: {
+                routes: {
+                    prefix: '/api/v1'
+                }
+            }
+        },
+        {
+            plugin: './server/web/redirect'
         }
     ]
 };

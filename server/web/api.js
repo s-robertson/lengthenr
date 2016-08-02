@@ -2,45 +2,9 @@
 
 const Joi = require('joi');
 const Randomstring = require('randomstring');
-const Boom = require('boom');
-const md5 = require('md5');
+const Md5 = require('md5');
 
 exports.register = function (server, options, next) {
-
-    server.route({
-        method: 'GET',
-        path: '/r/{longUrl}',
-        handler: function (request, reply) {
-
-            const models = request.server.plugins['hapi-sequelize'].db.sequelize.models;
-            const lengthened = request.params.longUrl;
-            const lengthenedHash = md5(request.params.longUrl);
-
-            models.Url.findAll( { where: { lengthenedHash: lengthenedHash } } )
-                .then((urls) => {
-
-                    let foundUrl = false;
-
-                    for (let url of urls) {
-                        if (url.lengthened == lengthened) {
-                            foundUrl = url;
-                            break;
-                        }
-                    }
-
-                    if (!foundUrl) {
-                        return reply(Boom.badRequest('Invalid URL.'));
-                    }
-
-                    return reply.redirect(foundUrl.original).permanent();
-                })
-                .catch((err) => {
-
-                    return reply(err);
-                });
-
-        }
-    });
 
     server.route({
         method: 'POST',
@@ -56,8 +20,8 @@ exports.register = function (server, options, next) {
             const lengthenedUrl = Randomstring.generate(newLength);
 
             // Create hashes
-            const originalHash = md5(submittedUrl.original);
-            const lengthenedHash = md5(lengthenedUrl);
+            const originalHash = Md5(submittedUrl.original);
+            const lengthenedHash = Md5(lengthenedUrl);
 
             // First check and see if the URL already exists in the database.
             models.Url.findOrCreate({
@@ -94,5 +58,5 @@ exports.register = function (server, options, next) {
 
 
 exports.register.attributes = {
-    name: 'web'
+    name: 'api'
 };
